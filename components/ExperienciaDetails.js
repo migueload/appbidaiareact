@@ -4,6 +4,7 @@ import { useRoute } from '@react-navigation/native';
 import Cotizador from '../components/Cotizador';
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Modal, Pressable } from 'react-native';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -16,6 +17,8 @@ const ExperienciaDetails = () => {
   const [showExperienceFacilities, setShowExperienceFacilities] = useState(false);
   const [liked, setLiked] = useState(false);
   const [likesCount, setLikesCount] = useState(Number(experience.experiencia.likes || 0));
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
 
 
   const url_image_file_experience = "https://btravelconnect.com/file/img/experiencia";
@@ -81,12 +84,6 @@ const ExperienciaDetails = () => {
         body: JSON.stringify({ id_hotel: hotelId, user: uuid }),
       });
       const result = await response.json();
-      if(result){
-        Alert.alert('Like','Su like fue regsitrado con exito!');
-      }else{
-        Alert.alert('Like','Ya su like habia sido registrado para este tour!');
-      }
-      console.log("Like actualizado:", result);
     } catch (error) {
       console.error("Error al enviar like:", error);
     }
@@ -124,6 +121,13 @@ const storeUUID = async () => {
   }
 };
 
+//**Opcion para maximizar la vista de las imagenes del carrusel */
+
+const openImage = (imgUrl) => {
+  setSelectedImage(imgUrl);
+  setModalVisible(true);
+};
+
   if (loading) {
     return (
       <View style={[styles.container, { justifyContent: 'center', alignItems: 'center', flex: 1 }]}>
@@ -152,7 +156,9 @@ const storeUUID = async () => {
           showsHorizontalScrollIndicator={false}
           keyExtractor={(_, index) => index.toString()}
           renderItem={({ item }) => (
-            <Image source={{ uri: item }} style={styles.image} resizeMode="cover" />
+            <Pressable onPress={() => openImage(item)}>
+              <Image source={{ uri: item }} style={styles.image} resizeMode="cover" />
+            </Pressable>
           )}
           onScroll={(event) => {
             const slide = Math.ceil(
@@ -236,6 +242,19 @@ const storeUUID = async () => {
           setIsConfirmationVisible(true);
         }}
       />
+
+      <Modal visible={modalVisible} transparent={true}>
+        <View style={styles.modalContainer}>
+          <Pressable style={styles.modalBackground} onPress={() => setModalVisible(false)}>
+            <Image
+              source={{ uri: selectedImage }}
+              style={styles.fullImage}
+              resizeMode="contain"
+            />
+          </Pressable>
+        </View>
+      </Modal>
+      
     </ScrollView>
   );
 };
@@ -275,7 +294,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   subtitle: {
-    fontSize: 12,
+    fontSize: 14,
     color: '#666',
     marginBottom: 10,
   },
@@ -302,7 +321,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   accordionHeader: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: '600',
     color: '#273C76',
     marginBottom: 10,
@@ -314,7 +333,7 @@ const styles = StyleSheet.create({
   
   facilityText: {
     fontFamily: 'arial',
-    fontSize: 12,
+    fontSize: 14,
     color: '#666',
     flexShrink: 1,
   },
@@ -329,6 +348,28 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#273C76',
   },
+  modalContainer: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,1)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalBackground: {
+    ...StyleSheet.absoluteFillObject,
+  },
+  imageContainer: {
+    zIndex: 1,
+    maxWidth: '100%',
+    maxHeight: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  fullImage: {
+    width: '90%',
+    height: '100%',
+    borderRadius: 10,
+    marginLeft: 20,
+  }
   
 });
 

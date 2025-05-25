@@ -69,20 +69,20 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   sectionTitle: {
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: '600',
     color: '#333',
     marginTop: 16,
     marginBottom: 6,
   },
   text: {
-    fontSize: 12,
+    fontSize: 14,
     color: '#444',
     lineHeight: 20,
     textAlign: 'justify',
   },
   bullet: {
-    fontSize: 11,
+    fontSize: 12,
     color: '#444',
     paddingLeft: 12,
     lineHeight: 20,

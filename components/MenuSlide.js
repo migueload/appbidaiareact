@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   menuItemText: {
-    fontSize: 14,
+    fontSize: 16,
     color: "#333",
     fontFamily: "arial",
   },

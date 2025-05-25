@@ -280,18 +280,18 @@ const styles = StyleSheet.create({
     height: 180,
   },
   hotelName: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: "bold",
     color: "#273C76",
   },
   hotelState: {
-    fontSize: 12,
+    fontSize: 14,
     color: "#261250",
     marginTop: 5,
   },
 
   hotelDiscount: {
-    fontSize: 14,
+    fontSize: 16,
     color: "#999",
     marginTop: 5,
   },
@@ -300,14 +300,14 @@ const styles = StyleSheet.create({
     color: "#ff5a5f",
   },
   star: {
-    fontSize: 16,
+    fontSize: 14,
     color: "#FFC857",
     marginHorizontal: 2
   },
   starContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginLeft: '75%',
+    marginLeft: '65%',
   },
   location:{
     marginTop: -25,
@@ -404,7 +404,7 @@ const styles = StyleSheet.create({
     padding: 16,
     justifyContent: 'center',
   },
-  image: {
+   image: {
     width: 150,
     height: '120%',
   },
@@ -426,7 +426,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
   },
   title: {
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: '600',
     color: '#222',
     marginTop: 2,
@@ -440,13 +440,13 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   description: {
-    fontSize: 10,
+    fontSize: 12,
     color: '#666',
     paddingHorizontal: 16,
     marginTop: 1,
   },
   linkText: {
-    fontSize: 12,
+    fontSize: 14,
     color: '#000',
     fontWeight: '500',
     paddingHorizontal: 5,
