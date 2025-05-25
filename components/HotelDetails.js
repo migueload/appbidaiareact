@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, Image, Dimensions, ActivityIndicator, FlatList, Alert} from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Image, Dimensions, ActivityIndicator, FlatList} from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { Ionicons } from "@expo/vector-icons";
 import Cotizador from '../components/Cotizador';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Modal, Pressable } from 'react-native';
+import MapaWeb from './MapaWeb';
 
 
 const screenWidth = Dimensions.get('window').width;
@@ -252,6 +253,15 @@ const openImage = (imgUrl) => {
           </View>
         )}
       </View>
+       
+      
+      <MapaWeb
+        latitud={hotel.hotel.latitud}
+        longitud={hotel.hotel.longitud}
+        nombreHotel={hotel.hotel.nombre}
+      />
+
+
        <Cotizador
         formData={formData}
         setFormData={setFormData}
@@ -359,7 +369,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   bullet: {
-    fontSize: 16,
+    fontSize: 18,
     color: '#007AFF',
     marginRight: 6,
   },
