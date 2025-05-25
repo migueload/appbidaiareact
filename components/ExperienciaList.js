@@ -63,7 +63,11 @@ const ExperienciaList = ({ route, navigation }) => {
         },
       });
       const data = await response.json();
-      setBanner(data[0]);
+      if (data.length > 0 && data[0].status === "1") {
+        setBanner(data[0]);
+      } else {
+        setBanner(null); 
+      }
     } catch (error) {
       console.error("Error al cargar la informacion del banner:", error);
     }
@@ -146,7 +150,7 @@ const ExperienciaList = ({ route, navigation }) => {
       </View>
 
       {/* Banner*/}
-        {showBanner && (
+        {showBanner && banner && (
         <View style={styles.card}>
           <View style={styles.cardContent}>
           <Image

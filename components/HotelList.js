@@ -60,14 +60,14 @@ const HotelList = ({ route, navigation }) => {
     setSearchQuery(text);
   
     if (text.trim() === "") {
-      setFilteredHotels(hotels); // Restaurar lista completa
+      setFilteredHotels(hotels); 
     } else {
       const filtered = hotels.filter(
         (hotel) =>
-          hotel.hotel?.nombre && // Asegúrate de verificar que el objeto `hotel` y `nombre` existan
+          hotel.hotel?.nombre && 
           hotel.hotel.nombre.toLowerCase().includes(text.toLowerCase())
       );
-      setFilteredHotels(filtered); // Actualiza la lista filtrada
+      setFilteredHotels(filtered);
     }
   };
   
@@ -82,7 +82,11 @@ const HotelList = ({ route, navigation }) => {
         },
       });
       const data = await response.json();
-      setBanner(data[0]);
+      if (data.length > 0 && data[0].status === "1") {
+        setBanner(data[0]);
+      } else {
+        setBanner(null); 
+      }
     } catch (error) {
       console.error("Error al cargar la informacion del banner:", error);
     }
@@ -152,41 +156,42 @@ const HotelList = ({ route, navigation }) => {
         />
       </View>
 
-     {/* Banner*/}
-        {showBanner && (
-        <View style={styles.card}>
-          <View style={styles.cardContent}>
+     {showBanner && banner && (
+      <View style={styles.card}>
+        <View style={styles.cardContent}>
           <Image
-              source={{uri: banner.url_imagen}}
-              style={styles.adImage}
-              resizeMode="cover"
-            />
-            <Text style={styles.title}>{banner.titulo}</Text>
-            <Text style={styles.description}>{banner.subtitulo}</Text>
-            <TouchableOpacity style={styles.link} 
-              onPress={() =>
-                navigation.navigate("Publicidad", { publicidad: banner })
-              }>
-              <Text style={styles.linkText}>Conoce más</Text>
-              <Text style={styles.arrow}>›</Text>
-            </TouchableOpacity>
-            {/* Logo */}
-            <View style={styles.logoContainer}>
-              <Image
-                source={require("../assets/images/logo_bt_small.jpg")}
-                style={styles.logo}
-                resizeMode="contain"
-              />
-            </View>
-          </View>
+            source={{uri: banner.url_imagen}}
+            style={styles.adImage}
+            resizeMode="cover"
+          />
+          <Text style={styles.title}>{banner.titulo}</Text>
+          <Text style={styles.description}>{banner.subtitulo}</Text>
           <TouchableOpacity
-              style={styles.closeButtonBanner}
-              onPress={() => setShowBanner(false)}
-            >
-              <Text style={styles.closeTextBanner}>X</Text>
-            </TouchableOpacity>
+            style={styles.link}
+            onPress={() =>
+              navigation.navigate("Publicidad", { publicidad: banner })
+            }>
+            <Text style={styles.linkText}>Conoce más</Text>
+            <Text style={styles.arrow}>›</Text>
+          </TouchableOpacity>
+          {/* Logo */}
+          <View style={styles.logoContainer}>
+            <Image
+              source={require("../assets/images/logo_bt_small.jpg")}
+              style={styles.logo}
+              resizeMode="contain"
+            />
+          </View>
         </View>
-        )}
+        <TouchableOpacity
+          style={styles.closeButtonBanner}
+          onPress={() => setShowBanner(false)}
+        >
+          <Text style={styles.closeTextBanner}>X</Text>
+        </TouchableOpacity>
+      </View>
+    )}
+
 
       {/* Hotel List */}
       <FlatList
